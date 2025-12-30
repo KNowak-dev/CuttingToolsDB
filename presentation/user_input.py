@@ -1,0 +1,227 @@
+from edv_number import EDVNumber
+from semi_edv_number import EDV_semi_finished_product
+from dataclasses import dataclass
+from add_tool import CuttingTool
+from typing import Optional
+from tools_storage import ToolStorage
+
+def Input_EDVNumber():
+    nr_edv = EDVNumber(nr_edv=str(input("Wprowadź nr EDV: ")))
+
+    return nr_edv        
+           
+def Input_type_tool():
+    type_tool_to_choose = ["Toczne", "Obrotowe"]
+
+    print("Wybierz typ: ")
+    for item in type_tool_to_choose:
+        print("- ", item)
+
+    type_tool = input("Twój wybór: ")
+
+    if not (type_tool == "Obrotowe" or type_tool == "Toczne"):
+        raise ValueError("Nieprawidłowy wybór.")
+        
+    return type_tool
+        
+def Input_origin():
+    origin_to_choose = ["Kupne", "Produkowane"]
+
+    print("Wybierz pochodzenie: ")
+    for item in origin_to_choose:
+        print("- ", item)
+
+    origin = input("Twój wybór: ")
+
+    if not (origin == "Kupne" or origin == "Produkowane"):
+        raise ValueError("Nieprawidłowy wybór!")
+        
+    return origin     
+
+def Input_semi_edv_number():
+    nr_edv_semi_finished_product = EDV_semi_finished_product(nr_edv_semi_finished_product=str(input("Wprowadź nr EDV półfabrykatu: ")))
+
+    return nr_edv_semi_finished_product
+
+def Input_kind_tool():
+    kind_tool_to_choose = {1 : "Wiertło", 
+                       2 : "Nawiertak", 
+                       3 : "Rozwiertak", 
+                       4 : "Pogłębiacz", 
+                       5 : "Gratownik", 
+                       6 : "Płytka", 
+                       7 : "Nóż tokarski"}
+    
+    print("Wybierz rodzaj narzędzia: ")
+    for item in kind_tool_to_choose.items():
+        print("- ", item)
+    
+    choice = int(input("Twój wybór: "))
+        
+    kind_tool = kind_tool_to_choose.get(choice)
+    if not kind_tool:
+        return None
+
+    return kind_tool
+        
+
+def Input_prod_detail():
+    production_detail_to_choose = { 1 : "Antriebswelle", 
+                                2 : "Gewindestueck", 
+                                3 : "Huelse", 
+                                4 : "Polkern", 
+                                5 : "Bodenstueck", 
+                                6 : "Conical", 
+                                7 : "Kolben",
+                                8 : "Kolbenfuehrung",
+                                9 : "Magnetkern",
+                                10 : "Magnethuelse",
+                                11 : "Welle",
+                                12 : "Zentralventilgehause",
+                                13 : "Gehause"}
+    
+    print("Wybierz detal produkcyjny: ")
+    for item in production_detail_to_choose.items():
+        print("- ", item)
+
+    prod_detail = int(input("Twój wybór: "))
+
+    production_detail = production_detail_to_choose.get(prod_detail)
+        
+    if not production_detail:
+        return None
+
+    return production_detail
+
+def Input_machine():
+    machine_to_choose = { 1 : "TTB", 
+                    2 : "ANCA", 
+                    3 : "Rollomatic", 
+                    4 : "HAAS", 
+                    5 : "Walter", 
+                    6 : "EWAG", 
+                    7 : "COM"
+                    }
+    
+    print("Wybierz maszynę do produkowania narzędzia: ")
+    for item in machine_to_choose.items():
+        print("- ", item)
+
+    mach = int(input("Twój wybór: "))
+    machine = machine_to_choose.get(mach)
+
+    if not machine:
+        return None
+        
+    return machine
+
+def Input_prod_machine():
+    production_maschine_to_choose = { 1 : "GM-20", 
+                        2 : "Index-32", 
+                        3 : "Index-36", 
+                        4 : "Index-40", 
+                        5 : "SG-18", 
+                        6 : "SC7-36", 
+                        7 : "SC9-40",
+                        8 : "Benzinger",
+                        9 : "DMG Multisprint 36",
+                        10 : "Tornos",
+                        11 : "Traub TNK36",
+                        12 : "Traub TNX32",
+                        13 : "GS-18"}
+    
+    print("Wybierz maszynę produkcyjną, na której pracuje narzędzie: ")
+    for item in production_maschine_to_choose.items():
+        print("- ", item)
+
+    prod_machine = int(input("Twój wybór: "))
+
+    production_machine = production_maschine_to_choose.get(prod_machine)
+    
+    if not production_machine:
+        return None
+
+    return production_machine
+
+def Input_semi_price():
+    print("Cena półfabrykatu:\n")
+    try:
+        semi_finished_product_price = float(input("Wprowadź cenę półfabrykatu."))
+    except ValueError:
+        print("Nieprawidłowy format danej.")
+        return None
+
+    return semi_finished_product_price
+
+def Input_total_price(): 
+    print("Wrpowadź całkowitą cene narzędzia:\n")
+    try:
+        total_price = float(input("Wprowadź cenę narzędzia."))
+    except ValueError:
+        print("Nieprawidłowy format danej.")
+        return None
+        
+    return total_price
+
+@dataclass    
+class data_to_AddCuttingTool:
+    nr_edv: Optional[EDVNumber] = None
+    type_tool: str = ""
+    origin: str = ""
+    nr_edv_semi_finished_product: Optional[EDV_semi_finished_product] = None
+    kind_tool: str = ""
+    production_detail: str = ""
+    machine: str = ""
+    production_machine: str = ""
+    semi_finished_product_price: float = 0.0
+    total_price: float = 0.0
+
+if __name__ == "__main__":
+    storage = ToolStorage()
+    
+    # Pobieramy dane od użytkownika
+    nr_edv = Input_EDVNumber()
+    type_tool = Input_type_tool()
+    origin = Input_origin()
+    nr_edv_semi = Input_semi_edv_number()
+    kind_tool = Input_kind_tool()
+    prod_detail = Input_prod_detail()
+    machine = Input_machine()
+    prod_machine = Input_prod_machine()
+    semi_price = Input_semi_price()
+    total_price = Input_total_price()
+
+    # Tworzymy dataclass pomocniczą
+    tool_data_input = data_to_AddCuttingTool(
+        nr_edv=nr_edv,
+        type_tool=type_tool,
+        origin=origin,
+        nr_edv_semi_finished_product=nr_edv_semi,
+        kind_tool=kind_tool,
+        production_detail=prod_detail,
+        machine=machine,
+        production_machine=prod_machine,
+        semi_finished_product_price=semi_price,
+        total_price=total_price
+    )
+
+    # Tworzymy obiekt CuttingTool
+    new_tool = CuttingTool(
+        nr_edv=tool_data_input.nr_edv.nr_edv,
+        type_tool=tool_data_input.type_tool,
+        origin=tool_data_input.origin,
+        nr_edv_semi_finished_product=tool_data_input.nr_edv_semi_finished_product.nr_edv_semi_finished_product,
+        kind_tool=tool_data_input.kind_tool,
+        production_detail=tool_data_input.production_detail,
+        machine=tool_data_input.machine,
+        production_machine=tool_data_input.production_machine,
+        semi_finished_product_price=tool_data_input.semi_finished_product_price,
+        total_price=tool_data_input.total_price
+    )
+
+    # Dodajemy do magazynu
+    storage.storage.append(new_tool)
+
+    print("\nAktualny magazyn narzędzi:")
+    for tool in storage.storage:
+        print(tool)
