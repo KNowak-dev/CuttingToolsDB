@@ -1,15 +1,11 @@
-from pydantic import BaseModel, validator
+from pydantic import AfterValidator
+from typing import Annotated
 import re
 
-class EDV_semi_finished_product(BaseModel):
-    nr_edv_semi_finished_product: str
-
-    @validator('nr_edv_semi_finished_product')
-    def validate_edv_number(cls, nr_edv_semi_finished_product):
-        pattern = r"[5]{1}[7]{1}-\d{5}"
-        match = re.fullmatch(pattern, nr_edv_semi_finished_product)
-    
-        if not match:
+class EDVNumberSemiProduct:
+    def validate_edv_semi(v: str) -> str:
+        if not re.fullmatch(r'57-\d{5}', v):
             raise ValueError("Podałeś zły format EDV półfabrykatu.")
-        return nr_edv_semi_finished_product
-    
+        return v
+
+    EDV_semi_product = Annotated[str, AfterValidator(validate_edv_semi)]

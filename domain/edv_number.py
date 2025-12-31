@@ -1,15 +1,12 @@
-from pydantic import BaseModel, validator
+from pydantic import AfterValidator
+from typing import Annotated
 import re
 
-class EDVNumber(BaseModel):
-    nr_edv: str
-        
-    @validator('nr_edv')
-    def validate_edv_number(cls, nr_edv):
-        pattern = r"[5]{1}[1]{1}-\d{5}"
-        match = re.fullmatch(pattern, nr_edv)
-        
-        if not match:
+class EDVNumber:
+    def validate_edv(v: str) -> str:
+        if not re.fullmatch(r"51-\d{5}", v):
             raise ValueError("Podałeś zły format EDV.")
-        return nr_edv
+        return v
+
+    EDV = Annotated[str, AfterValidator(validate_edv)]
     
