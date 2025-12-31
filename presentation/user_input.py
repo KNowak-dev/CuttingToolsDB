@@ -1,14 +1,13 @@
 from edv_number import EDVNumber
-from semi_edv_number import EDV_semi_finished_product
-from dataclasses import dataclass
-from add_tool import CuttingTool
-from typing import Optional
+from semi_edv_number import EDVNumberSemiProduct
 from tools_storage import ToolStorage
+from data_models import data_to_AddCuttingTool
+from add_tool import AddCuttingTool
 
 def Input_EDVNumber():
-    nr_edv = EDVNumber(nr_edv=str(input("Wprowadź nr EDV: ")))
+    edv = EDVNumber.validate_edv(str(input("Wprowadź nr edv: ")))
 
-    return nr_edv        
+    return edv        
            
 def Input_type_tool():
     type_tool_to_choose = ["Toczne", "Obrotowe"]
@@ -38,10 +37,11 @@ def Input_origin():
         
     return origin     
 
-def Input_semi_edv_number():
-    nr_edv_semi_finished_product = EDV_semi_finished_product(nr_edv_semi_finished_product=str(input("Wprowadź nr EDV półfabrykatu: ")))
 
-    return nr_edv_semi_finished_product
+def Input_semi_edv_number():
+    edv_semi_product = EDVNumberSemiProduct.validate_edv_semi(str(input("Wprowadź nr edv półfabrykatu: ")))
+
+    return edv_semi_product
 
 def Input_kind_tool():
     kind_tool_to_choose = {1 : "Wiertło", 
@@ -64,7 +64,6 @@ def Input_kind_tool():
 
     return kind_tool
         
-
 def Input_prod_detail():
     production_detail_to_choose = { 1 : "Antriebswelle", 
                                 2 : "Gewindestueck", 
@@ -100,7 +99,8 @@ def Input_machine():
                     4 : "HAAS", 
                     5 : "Walter", 
                     6 : "EWAG", 
-                    7 : "COM"
+                    7 : "COM",
+                    8 : "Brak"
                     }
     
     print("Wybierz maszynę do produkowania narzędzia: ")
@@ -154,32 +154,18 @@ def Input_semi_price():
     return semi_finished_product_price
 
 def Input_total_price(): 
-    print("Wrpowadź całkowitą cene narzędzia:\n")
+    print("Wrpowadź całkowitą cene narzędzia: ")
     try:
-        total_price = float(input("Wprowadź cenę narzędzia."))
+        total_price = float(input("Wprowadź cenę narzędzia: "))
     except ValueError:
         print("Nieprawidłowy format danej.")
         return None
         
     return total_price
 
-@dataclass    
-class data_to_AddCuttingTool:
-    nr_edv: Optional[EDVNumber] = None
-    type_tool: str = ""
-    origin: str = ""
-    nr_edv_semi_finished_product: Optional[EDV_semi_finished_product] = None
-    kind_tool: str = ""
-    production_detail: str = ""
-    machine: str = ""
-    production_machine: str = ""
-    semi_finished_product_price: float = 0.0
-    total_price: float = 0.0
-
 if __name__ == "__main__":
     storage = ToolStorage()
-    
-    # Pobieramy dane od użytkownika
+
     nr_edv = Input_EDVNumber()
     type_tool = Input_type_tool()
     origin = Input_origin()
@@ -191,8 +177,7 @@ if __name__ == "__main__":
     semi_price = Input_semi_price()
     total_price = Input_total_price()
 
-    # Tworzymy dataclass pomocniczą
-    tool_data_input = data_to_AddCuttingTool(
+    tool_data = data_to_AddCuttingTool(
         nr_edv=nr_edv,
         type_tool=type_tool,
         origin=origin,
@@ -203,25 +188,4 @@ if __name__ == "__main__":
         production_machine=prod_machine,
         semi_finished_product_price=semi_price,
         total_price=total_price
-    )
-
-    # Tworzymy obiekt CuttingTool
-    new_tool = CuttingTool(
-        nr_edv=tool_data_input.nr_edv.nr_edv,
-        type_tool=tool_data_input.type_tool,
-        origin=tool_data_input.origin,
-        nr_edv_semi_finished_product=tool_data_input.nr_edv_semi_finished_product.nr_edv_semi_finished_product,
-        kind_tool=tool_data_input.kind_tool,
-        production_detail=tool_data_input.production_detail,
-        machine=tool_data_input.machine,
-        production_machine=tool_data_input.production_machine,
-        semi_finished_product_price=tool_data_input.semi_finished_product_price,
-        total_price=tool_data_input.total_price
-    )
-
-    # Dodajemy do magazynu
-    storage.storage.append(new_tool)
-
-    print("\nAktualny magazyn narzędzi:")
-    for tool in storage.storage:
-        print(tool)
+)
