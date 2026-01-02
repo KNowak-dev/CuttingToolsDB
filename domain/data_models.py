@@ -4,6 +4,12 @@ from edv_number import EDVNumber
 from semi_edv_number import EDVNumberSemiProduct
 
 @dataclass
+class CoatingTool:
+      coating_name: str = ""
+      coating_width: int = 0
+      coating_factory: str = ""
+
+@dataclass
 class CuttingTool:
         nr_edv: Optional[EDVNumber] = None
         type_tool: str =""
@@ -15,8 +21,9 @@ class CuttingTool:
         production_machine: str = ""
         semi_finished_product_price: float = 0.0
         total_price: float = 0.0
-
-@dataclass    
+        coating: Optional[CoatingTool] = None
+        
+@dataclass
 class data_to_AddCuttingTool:
     type_tool: str
     origin: str
