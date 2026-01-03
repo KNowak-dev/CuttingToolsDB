@@ -6,6 +6,7 @@ Główne funkcjonalności (moduły) aplikacji:
 
 2. Narzędzia:
 a) moduł ten ma za zadanie wyszukiwać narzędzie po numerze EDV, który ma mieć postać 51 - *****.
+
 b) po wyszukiwaniu narzędzia aplikacja ma wyświetlać stan magazynowy danego narzędzia, tzn:
    - ilość sztuk w magazynie produkcyjnym,
    - ma wyświetlać wszystkie informację dotyczące danego narzędzie, tzn.
@@ -21,7 +22,7 @@ b) po wyszukiwaniu narzędzia aplikacja ma wyświetlać stan magazynowy danego n
 	 - cena wyprodukowania narzędzia, 
 	 - firmę powlekającą, powłokę.
    - możliwość edytowania narzędzia
-   -  możliwość usunięcia narzędzia z bazy. 
+   - możliwość usunięcia narzędzia z bazy. 
 
 4. Powlekanie: 
 – w tym module musimy mieć możliwość wyszukania narzędzia po jego EDV,
