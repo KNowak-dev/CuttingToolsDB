@@ -23,7 +23,7 @@ Główne funkcjonalności (moduły) aplikacji:
    - możliwość edytowania narzędzia
    -  możliwość usunięcia narzędzia z bazy. 
 
-3. Powlekanie: 
+4. Powlekanie: 
 – w tym module musimy mieć możliwość wyszukania narzędzia po jego EDV,
 - mieć możliwość przypisać do danego narzędzia:
 	- rodzaj powłoki, 
