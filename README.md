@@ -5,8 +5,8 @@ Główne funkcjonalności (moduły) aplikacji:
 1. Logowanie – do bazy/aplikacji mogą mieć dostęp tylko uprawnieni użytkownicy.
 
 2. Narzędzia:
-   a) moduł ten ma za zadanie wyszukiwać narzędzie po numerze EDV, który ma mieć postać 51 - *****.
-   b) po wyszukiwaniu narzędzia aplikacja ma wyświetlać stan magazynowy danego narzędzia, tzn:
+a) moduł ten ma za zadanie wyszukiwać narzędzie po numerze EDV, który ma mieć postać 51 - *****.
+b) po wyszukiwaniu narzędzia aplikacja ma wyświetlać stan magazynowy danego narzędzia, tzn:
    - ilość sztuk w magazynie produkcyjnym,
    - ma wyświetlać wszystkie informację dotyczące danego narzędzie, tzn.
      -  nr półfabrykatu w postaci 57-*****, 
