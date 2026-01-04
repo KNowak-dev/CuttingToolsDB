@@ -30,7 +30,7 @@ Główne funkcjonalności (moduły) aplikacji:
 - mieć możliwość przypisać do danego narzędzia:
 	- rodzaj powłoki, 
 	- firmę powlekającą, 
-	- cenę powlekania w walucie PLN oraz EUR. 
+	- cenę powlekania w walucie PLN. 
 - informacje dodane w tym module mają wyświetlać się w module Narzędzia, po wpisaniu nr EDV czyli oba moduły muszą być ze sobą powiązane.
 
 4. Wycena: 
