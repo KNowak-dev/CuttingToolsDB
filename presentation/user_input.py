@@ -3,26 +3,13 @@ from semi_edv_number import EDVNumberSemiProduct
 from tools_storage import ToolStorage
 from data_models import data_to_AddCuttingTool
 from add_tool import AddCuttingTool
+from choose_type import InputTypeTool
 
 def Input_EDVNumber():
     edv = EDVNumber.validate_edv(str(input("Wprowadź nr edv: ")))
 
     return edv        
            
-def Input_type_tool():
-    type_tool_to_choose = ["Toczne", "Obrotowe"]
-
-    print("Wybierz typ: ")
-    for item in type_tool_to_choose:
-        print("- ", item)
-
-    type_tool = input("Twój wybór: ")
-
-    if not (type_tool == "Obrotowe" or type_tool == "Toczne"):
-        raise ValueError("Nieprawidłowy wybór.")
-        
-    return type_tool
-        
 def Input_origin():
     origin_to_choose = ["Kupne", "Produkowane"]
 
@@ -65,19 +52,19 @@ def Input_kind_tool():
     return kind_tool
         
 def Input_prod_detail():
-    production_detail_to_choose = { 1 : "Antriebswelle", 
-                                2 : "Gewindestueck", 
-                                3 : "Huelse", 
-                                4 : "Polkern", 
-                                5 : "Bodenstueck", 
-                                6 : "Conical", 
-                                7 : "Kolben",
-                                8 : "Kolbenfuehrung",
-                                9 : "Magnetkern",
-                                10 : "Magnethuelse",
-                                11 : "Welle",
-                                12 : "Zentralventilgehause",
-                                13 : "Gehause"}
+    production_detail_to_choose = { 1 : "Tuleja", 
+                                2 : "Wał", 
+                                3 : "Wał korbowy", 
+                                4 : "Panewka", 
+                                5 : "Tarcza", 
+                                6 : "Ślimacznica", 
+                                7 : "Śruba pociągowa",
+                                8 : "Trzpień",
+                                9 : "Stożek morsa",
+                                10 : "Koło zębate",
+                                11 : "Koło zębate stożkowe",
+                                12 : "Pierścień osadczy",
+                                13 : "Dystans"}
     
     print("Wybierz detal produkcyjny: ")
     for item in production_detail_to_choose.items():
@@ -116,19 +103,19 @@ def Input_machine():
     return machine
 
 def Input_prod_machine():
-    production_maschine_to_choose = { 1 : "GM-20", 
-                        2 : "Index-32", 
-                        3 : "Index-36", 
-                        4 : "Index-40", 
-                        5 : "SG-18", 
-                        6 : "SC7-36", 
-                        7 : "SC9-40",
-                        8 : "Benzinger",
-                        9 : "DMG Multisprint 36",
-                        10 : "Tornos",
-                        11 : "Traub TNK36",
-                        12 : "Traub TNX32",
-                        13 : "GS-18"}
+    production_maschine_to_choose = { 1 : "Tokarka", 
+                        2 : "Frezarka pionowa", 
+                        3 : "Frezarka pozioma", 
+                        4 : "Szlifierka kłowa", 
+                        5 : "Frezarka obwiedniowa", 
+                        6 : "Dłutownica", 
+                        7 : "Szlifierka do płaszczyzn",
+                        8 : "Tokarka karuzelowa",
+                        9 : "Wiertarko-frezarka",
+                        10 : "Tokarka CNC",
+                        11 : "Frezarka CNC",
+                        12 : "Wiertarka kolumnowa",
+                        13 : "Wiertarka pionowa"}
     
     print("Wybierz maszynę produkcyjną, na której pracuje narzędzie: ")
     for item in production_maschine_to_choose.items():
@@ -144,9 +131,8 @@ def Input_prod_machine():
     return production_machine
 
 def Input_semi_price():
-    print("Cena półfabrykatu:\n")
     try:
-        semi_finished_product_price = float(input("Wprowadź cenę półfabrykatu."))
+        semi_finished_product_price = float(input("Wprowadź cenę półfabrykatu: "))
     except ValueError:
         print("Nieprawidłowy format danej.")
         return None
@@ -154,7 +140,6 @@ def Input_semi_price():
     return semi_finished_product_price
 
 def Input_total_price(): 
-    print("Wrpowadź całkowitą cene narzędzia: ")
     try:
         total_price = float(input("Wprowadź cenę narzędzia: "))
     except ValueError:
@@ -163,11 +148,22 @@ def Input_total_price():
         
     return total_price
 
+def Input_quantity():
+    try:
+        quantity = int(input("Wprowadź ilość sztuk."))
+    except ValueError:
+        print("Nieprawidłowy format danej.")
+        quantity = 0
+    
+    return quantity
+
 if __name__ == "__main__":
-    storage = ToolStorage()
+    storage = ToolStorage() 
+    adder = AddCuttingTool(storage)
+    type_tool = InputTypeTool(storage)
 
     nr_edv = Input_EDVNumber()
-    type_tool = Input_type_tool()
+    selected_type = type_tool.start_choose_type()
     origin = Input_origin()
     nr_edv_semi = Input_semi_edv_number()
     kind_tool = Input_kind_tool()
@@ -176,10 +172,11 @@ if __name__ == "__main__":
     prod_machine = Input_prod_machine()
     semi_price = Input_semi_price()
     total_price = Input_total_price()
+    quantity = Input_quantity()
 
     tool_data = data_to_AddCuttingTool(
         nr_edv=nr_edv,
-        type_tool=type_tool,
+        type_tool=selected_type,
         origin=origin,
         nr_edv_semi_finished_product=nr_edv_semi,
         kind_tool=kind_tool,
@@ -187,5 +184,11 @@ if __name__ == "__main__":
         machine=machine,
         production_machine=prod_machine,
         semi_finished_product_price=semi_price,
-        total_price=total_price
+        total_price=total_price,
+        quantity=quantity
 )
+    
+    new_tool = adder.add_tool(tool_data)
+    print(f"Dodano narzędzie: {new_tool}")
+    print("Lista narzędzi w magazynie:", storage.all())
+    
