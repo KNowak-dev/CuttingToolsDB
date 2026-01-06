@@ -4,27 +4,13 @@ from tools_storage import ToolStorage
 from data_models import data_to_AddCuttingTool
 from add_tool import AddCuttingTool
 from choose_type import InputTypeTool
+from choose_origin import InputToolOrigin
 
 def Input_EDVNumber():
     edv = EDVNumber.validate_edv(str(input("Wprowadź nr edv: ")))
 
     return edv        
            
-def Input_origin():
-    origin_to_choose = ["Kupne", "Produkowane"]
-
-    print("Wybierz pochodzenie: ")
-    for item in origin_to_choose:
-        print("- ", item)
-
-    origin = input("Twój wybór: ")
-
-    if not (origin == "Kupne" or origin == "Produkowane"):
-        raise ValueError("Nieprawidłowy wybór!")
-        
-    return origin     
-
-
 def Input_semi_edv_number():
     edv_semi_product = EDVNumberSemiProduct.validate_edv_semi(str(input("Wprowadź nr edv półfabrykatu: ")))
 
@@ -161,10 +147,11 @@ if __name__ == "__main__":
     storage = ToolStorage() 
     adder = AddCuttingTool(storage)
     type_tool = InputTypeTool(storage)
+    origin = InputToolOrigin(storage)
 
     nr_edv = Input_EDVNumber()
     selected_type = type_tool.start_choose_type()
-    origin = Input_origin()
+    origin_input = origin.start_choose_origin()
     nr_edv_semi = Input_semi_edv_number()
     kind_tool = Input_kind_tool()
     prod_detail = Input_prod_detail()
@@ -174,10 +161,14 @@ if __name__ == "__main__":
     total_price = Input_total_price()
     quantity = Input_quantity()
 
+    if not selected_type or not origin_input:
+        print("Nie wybrano typu lub pochodzenia narzędzia.")
+        exit()
+
     tool_data = data_to_AddCuttingTool(
         nr_edv=nr_edv,
         type_tool=selected_type,
-        origin=origin,
+        origin=origin_input,
         nr_edv_semi_finished_product=nr_edv_semi,
         kind_tool=kind_tool,
         production_detail=prod_detail,
