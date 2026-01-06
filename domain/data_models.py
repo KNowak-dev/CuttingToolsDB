@@ -3,6 +3,7 @@ from typing import Optional
 from edv_number import EDVNumber
 from semi_edv_number import EDVNumberSemiProduct
 from choose_type import InputTypeTool
+from choose_origin import InputToolOrigin
 
 @dataclass
 class CoatingTool:
@@ -14,7 +15,7 @@ class CoatingTool:
 class CuttingTool:
         nr_edv: Optional[EDVNumber] = None
         type_tool: Optional[str] = None
-        origin: str = ""
+        origin: Optional[str] = None
         nr_edv_semi_finished_product: Optional[EDVNumberSemiProduct] = None
         kind_tool: str = ""
         production_detail: str = ""
@@ -27,8 +28,8 @@ class CuttingTool:
         
 @dataclass
 class data_to_AddCuttingTool:
-    type_tool: Optional[InputTypeTool] = None
-    origin: str
+    type_tool: Optional[str] = None
+    origin: Optional[str] = None
     kind_tool: str
     production_detail: str
     machine: str
