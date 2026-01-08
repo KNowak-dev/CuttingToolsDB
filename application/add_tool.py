@@ -18,7 +18,9 @@ class AddCuttingTool:
                            machine=data.machine, 
                            production_machine=data.production_machine,
                            semi_finished_product_price=data.semi_finished_product_price,
-                           total_price=data.total_price)
+                           total_price=data.total_price,
+                           quantity=data.quantity
+                           )
 
         self.tool_storage.add(tool)
         return tool
@@ -28,7 +30,7 @@ if __name__ == "__main__":
         Input_EDVNumber, Input_type_tool, Input_origin,
         Input_semi_edv_number, Input_kind_tool,
         Input_prod_detail, Input_machine, Input_prod_machine,
-        Input_semi_price, Input_total_price, data_to_AddCuttingTool
+        Input_semi_price, Input_total_price, Input_quantity, data_to_AddCuttingTool
     )
 
     storage = ToolStorage()
@@ -44,6 +46,7 @@ if __name__ == "__main__":
     prod_machine = Input_prod_machine()
     semi_price = Input_semi_price()
     total_price = Input_total_price()
+    quantity = Input_quantity()
 
     # Tworzenie obiektu danych
     tool_data = data_to_AddCuttingTool(
@@ -56,7 +59,8 @@ if __name__ == "__main__":
         machine=machine,
         production_machine=prod_machine,
         semi_finished_product_price=semi_price,
-        total_price=total_price
+        total_price=total_price,
+        quantity=quantity
     )
 
     # Dodawanie narzędzia do magazynu

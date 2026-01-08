@@ -14,13 +14,14 @@ class AddCoatingToStorage:
                 coating_name=data.coating_name,
                 coating_width=data.coating_width,
                 coating_factory=data.coating_factory,
-                coating_in_progress=data.coating_in_progress)
+                coating_in_progress=data.coating_in_progress,
+                coating_price = data.coating_price)
 
         self.tool_coating.add_coating_name(coating)
         return coating
     
 if __name__ == "__main__":
-    from input_coating_info import (Input_Coating_name, Input_Coating_Width, Input_Coating_Factory, Input_coating_in_progress)
+    from input_coating_info import (Input_Coating_name, Input_Coating_Width, Input_Coating_Factory, Input_coating_in_progress, Input_coating_price)
 
     coating_storage= CoatingStorage()
 
@@ -30,12 +31,14 @@ if __name__ == "__main__":
     coating_width = Input_Coating_Width()
     coating_factory = Input_Coating_Factory()
     coating_in_progress = Input_coating_in_progress()
+    coating_price = Input_coating_price()
 
     coating_data = CoatingTool(
         coating_name=coating_name,
         coating_width=coating_width,
         coating_factory=coating_factory,
-        coating_in_progress=coating_in_progress)
+        coating_in_progress=coating_in_progress,
+        coating_price=coating_price)
 
     try:
         new_coating = adder.add_coating(coating_data)
