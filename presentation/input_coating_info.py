@@ -12,3 +12,8 @@ def Input_Coating_Factory():
     coating_factory = str(input("Wprwoadź nazwę fimry powlekającej:"))
 
     return coating_factory
+
+def Input_coating_in_progress():
+    coating_in_progress = int(input("Wprowadź iloś narzędzi wysłanej do powlekania:"))
+
+    return coating_in_progress

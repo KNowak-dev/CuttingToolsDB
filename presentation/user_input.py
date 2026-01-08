@@ -143,6 +143,15 @@ def Input_quantity():
     
     return quantity
 
+def Input_month_tools_consumption():
+    try:
+        consumption = int(input("Wprowadź zużycie miesięczne narzędzia:"))
+    except ValueError:
+        print(("Nieprawidłowy format danej."))
+        consumption = 0
+
+    return consumption
+
 if __name__ == "__main__":
     storage = ToolStorage() 
     adder = AddCuttingTool(storage)
@@ -160,6 +169,7 @@ if __name__ == "__main__":
     semi_price = Input_semi_price()
     total_price = Input_total_price()
     quantity = Input_quantity()
+    month_tools_consumption = Input_month_tools_consumption()
 
     if not selected_type or not origin_input:
         print("Nie wybrano typu lub pochodzenia narzędzia.")
@@ -176,10 +186,10 @@ if __name__ == "__main__":
         production_machine=prod_machine,
         semi_finished_product_price=semi_price,
         total_price=total_price,
-        quantity=quantity
+        quantity=quantity,
+        month_tools_consumption=month_tools_consumption
 )
     
     new_tool = adder.add_tool(tool_data)
     print(f"Dodano narzędzie: {new_tool}")
     print("Lista narzędzi w magazynie:", storage.all())
-    

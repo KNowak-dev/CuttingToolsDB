@@ -25,6 +25,9 @@ class SearchTool:
         print("Maszyna produkcyjna, na której pracuje narzędzie:", tool.production_machine)
         print("Cena półfabrykatu:", tool.semi_finished_product_price)
         print("Cena narzędzia:", tool.total_price)
+        print("Ilość narzędzi:", tool.quantity)
+        print("Zużycie miesięczne:", tool.coating_in_progress)
+
         if tool.coating:
                 print("Powłoka:", tool.coating.coating_name)
         else:
