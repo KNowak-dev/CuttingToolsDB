@@ -11,6 +11,7 @@ class CoatingTool:
       coating_width: int = 0
       coating_factory: str = ""
       coating_in_progress: int = 0
+      coating_price: float = 0.0
 
 @dataclass
 class CuttingTool:
