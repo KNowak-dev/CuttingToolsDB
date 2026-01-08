@@ -10,6 +10,7 @@ class CoatingTool:
       coating_name: str = ""
       coating_width: int = 0
       coating_factory: str = ""
+      coating_in_progress: int = 0
 
 @dataclass
 class CuttingTool:
@@ -24,6 +25,7 @@ class CuttingTool:
         semi_finished_product_price: float = 0.0
         total_price: float = 0.0
         quantity: int = 0
+        month_tools_consumption: int = 0
         coating: Optional[CoatingTool] = None
         
 @dataclass
@@ -37,5 +39,6 @@ class data_to_AddCuttingTool:
     semi_finished_product_price: float
     total_price: float
     quantity: int
+    month_tools_consumption: int
     nr_edv: Optional[EDVNumber] = None
     nr_edv_semi_finished_product: Optional[EDVNumberSemiProduct] = None
