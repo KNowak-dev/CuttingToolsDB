@@ -36,7 +36,6 @@ Główne funkcjonalności (moduły) aplikacji:
 4. Wycena: 
 – w tym module znajdować się ma kalkulator, do którego wprowadzamy informację takie jak:
 	- typ narzędzia, 
-	- rodzaj, 
 	- półfabrykat oraz jego cenę, 
 	- czas maszynowy, 
 	- maszynę na której produkowane jest narzędzie,
